@@ -1,10 +1,10 @@
-from httpx import AsyncClient, Timeout
+import httpx
 from loguru import logger
 
-async def get_eligibility():
+def get_eligibility():
     try:
-        async with AsyncClient() as client:
-            response = await client.post(
+        with httpx.Client() as client:
+            response = client.post(
                 url='https://sandbox.onederful.co/sandbox/eligibility',
                 headers={'Content-Type': 'application/json'},
                 json={
@@ -22,7 +22,7 @@ async def get_eligibility():
                     },           
                     "version": "v2"       
                 },
-                timeout=Timeout(20.0)
+                timeout=httpx.Timeout(20.0)
             )
         response.raise_for_status()
         data = response.json()

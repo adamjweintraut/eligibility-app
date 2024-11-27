@@ -14,14 +14,12 @@ st.write("""\
 This page documents the responses returned using the Onederful Sandbox [here](https://developers.onederful.co/documentation/#response-eligibility-and-benefits)
 """)
 
-# Load the data from a CSV. We're caching this so it doesn't reload every time the app
-# reruns (e.g. if the user interacts with the widgets).
-# @st.cache_resource
-# async def load_data():
-#     data = await get_eligibility()
-#     return data
+@st.cache_resource
+def load_data():
+    data = get_eligibility()
+    return data
 
-data = asyncio.run(get_eligibility())
+data = load_data()
 
 def normalize_column(x):
     if isinstance(x, list):
